@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ember &amp; Oak Hair Studio</title>
+<meta name="description" content="Ember &amp; Oak Hair Studio: cuts, colour and treatments from three friendly stylists. Book your appointment online.">
+<meta property="og:title" content="Ember &amp; Oak Hair Studio">
+<meta property="og:description" content="Cuts, colour and treatments from three friendly stylists. Book online.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23b8490a'/%3E%3Cpath d='M50 22c10 14 18 22 18 34a18 18 0 0 1-36 0c0-12 8-20 18-34z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf3ec; --surface:#efdfd0; --ink:#3b2316; --muted:#6e5444; --line:#dcc6b4;
+  --accent:#b8490a; --accent-ink:#ffffff; --brown:#3b2316;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#1f130c; --surface:#2e1d12; --ink:#f6e9dc; --muted:#c9b09b; --line:#4a3222; --accent:#d9661a; --accent-ink:#1f130c; --brown:#f6e9dc}
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:5rem}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 "DM Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","DM Sans",system-ui,sans-serif;line-height:1.05;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 1.25rem}
+.skip{position:absolute;left:-999px;top:0;background:var(--accent);color:var(--accent-ink);padding:.6rem 1rem;z-index:10}
+.skip:focus{left:0}
+header.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav{display:flex;justify-content:space-between;align-items:center;padding:.9rem 0;gap:1rem}
+.logo{font:800 1.3rem "Bricolage Grotesque",sans-serif;text-decoration:none;letter-spacing:-.01em}
+.links{display:flex;align-items:center;gap:1.5rem}
+.links a.l{text-decoration:none;font-weight:500}
+.links a.l:hover{color:var(--accent)}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);font:500 1rem "DM Sans",sans-serif;padding:.8rem 1.4rem;border:0;border-radius:999px;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.hero{padding:4rem 0 5rem}
+.hero h1{font-weight:800;font-size:clamp(3rem,11vw,7.5rem);letter-spacing:-.03em;max-width:12ch}
+.hero p.lead{max-width:46ch;color:var(--muted);font-size:1.2rem;margin:1.5rem 0 2rem}
+.row{display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}
+section{padding:4.5rem 0}
+.alt{background:var(--surface)}
+h2{font-weight:800;font-size:clamp(2rem,5vw,3.25rem);letter-spacing:-.02em;margin-bottom:1.5rem}
+.tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.tab{font:500 1rem "DM Sans",sans-serif;padding:.55rem 1.1rem;border-radius:999px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--brown);color:var(--bg)}
+.price{display:flex;justify-content:space-between;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line)}
+.price b{font-weight:500}.price small{display:block;color:var(--muted)}
+.price span{font:800 1.25rem "Bricolage Grotesque",sans-serif;white-space:nowrap}
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2rem}
+.team h3{font-size:1.5rem;margin-bottom:.25rem}.team p{margin:.25rem 0}
+.dot{width:64px;height:64px;border-radius:50%;margin-bottom:1rem;display:grid;place-items:center;font:800 1.6rem "Bricolage Grotesque",sans-serif;color:#fff}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:3rem;align-items:start}
+.form{display:grid;gap:1rem;max-width:520px}
+label{display:grid;gap:.35rem;font-weight:500}
+input,select,textarea{font:inherit;padding:.8rem 1rem;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.err{color:#b3261e;font-size:.95rem;margin:0}
+@media (prefers-color-scheme:dark){.err{color:#ff9a8f}}
+.ok{background:var(--surface);border:2px solid var(--accent);padding:1.25rem 1.5rem;border-radius:16px;max-width:520px}
+.ok p{margin:.5rem 0 0}
+footer{padding:2.5rem 0;color:var(--muted);font-size:.95rem;border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+@media (max-width:640px){.links a.l{display:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div id="root"></div>
+<noscript><p style="padding:2rem">This page needs JavaScript. To book, email us directly.</p></noscript>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script>
+/* ===== EDIT THESE DETAILS BEFORE YOU LAUNCH ===== */
+const CONFIG = {
+  name: "Ember & Oak",
+  email: "hello@emberandoak.example",   // booking requests are emailed here
+  phone: "+15550123456",                // used for the call link
+  phoneLabel: "(555) 012-3456",
+  address: "12 Harbour Lane",
+  hours: "Tue–Sat, 9am–7pm",
+  year: 2026
+};
+/* ================================================= */
+
+const h = React.createElement;
+const { useState } = React;
+
+const SERVICES = {
+  Cuts: [
+    ["Women’s cut & blow-dry", "Consultation, wash, cut, finish", "$75"],
+    ["Men’s cut", "Scissor or clipper, wash included", "$45"],
+    ["Kids’ cut", "Under 12", "$30"],
+    ["Fringe trim", "Between cuts, just walk in", "Free"]
+  ],
+  Colour: [
+    ["Root touch-up", "Single-process, gloss finish", "$85"],
+    ["Balayage", "Hand-painted, toner and cut included", "$220"],
+    ["Full highlights", "Foils, toner and blow-dry", "$180"],
+    ["Colour correction", "Priced after a free consult", "From $250"]
+  ],
+  Treatments: [
+    ["Deep conditioning", "20 minutes, added to any service", "$25"],
+    ["Keratin smoothing", "Lasts up to 12 weeks", "$200"],
+    ["Scalp reset", "Massage and exfoliating cleanse", "$40"]
+  ]
+};
+
+const TEAM = [
+  ["Ines", "Colour lead", "Balayage and blondes. Will tell you honestly if the photo you brought won’t suit your hair.", "#b8490a"],
+  ["Tomas", "Cutting", "Short hair, curls and clipper work. Twelve years behind the same chair.", "#7a4a2b"],
+  ["Priya", "Treatments", "Keratin, scalp care and repair for hair that’s been through a lot.", "#8a3b12"]
+];
+
+function Header() {
+  return h("header", { className: "top" },
+    h("nav", { className: "wrap", "aria-label": "Main" },
+      h("a", { className: "logo", href: "#top" }, CONFIG.name),
+      h("div", { className: "links" },
+        h("a", { className: "l", href: "#services" }, "Services"),
+        h("a", { className: "l", href: "#team" }, "Team"),
+        h("a", { className: "l", href: "#book" }, "Contact"),
+        h("a", { className: "btn", href: "#book" }, "Book now"))));
+}
+
+function Hero() {
+  return h("div", { className: "wrap hero", id: "top" },
+    h("h1", null, "Hair that looks like yours, only better."),
+    h("p", { className: "lead" }, "A small studio with three stylists, no rush and no upselling. Every visit starts with a ten-minute chat about what you actually want."),
+    h("div", { className: "row" },
+      h("a", { className: "btn", href: "#book" }, "Book an appointment"),
+      h("span", { className: "muted" }, CONFIG.hours)));
+}
+
+function Services() {
+  const names = Object.keys(SERVICES);
+  const [active, setActive] = useState(names[0]);
+  return h("section", { id: "services" },
+    h("div", { className: "wrap" },
+      h("h2", null, "Services and prices"),
+      h("div", { className: "tabs", role: "tablist", "aria-label": "Service categories" },
+        names.map(n => h("button", {
+          key: n, role: "tab", id: "tab-" + n, className: "tab",
+          "aria-selected": n === active, "aria-controls": "panel",
+          onClick: () => setActive(n)
+        }, n))),
+      h("div", { role: "tabpanel", id: "panel", "aria-labelledby": "tab-" + active },
+        SERVICES[active].map(([name, note, price]) =>
+          h("div", { className: "price", key: name },
+            h("div", null, h("b", null, name), h("small", null, note)),
+            h("span", null, price))))));
+}
+
+function Team() {
+  return h("section", { className: "alt", id: "team" },
+    h("div", { className: "wrap" },
+      h("h2", null, "Your stylists"),
+      h("div", { className: "team" },
+        TEAM.map(([name, role, bio, color]) =>
+          h("div", { key: name },
+            h("div", { className: "dot", style: { background: color }, "aria-hidden": "true" }, name[0]),
+            h("h3", null, name),
+            h("p", null, h("b", null, role)),
+            h("p", { className: "muted" }, bio))))));
+}
+
+function Booking() {
+  const allServices = Object.values(SERVICES).flat().map(s => s[0]);
+  const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  const [f, setF] = useState({ name: "", phone: "", service: allServices[0], day: "", note: "" });
+  const [errors, setErrors] = useState({});
+  const [mailto, setMailto] = useState(null);
+  const set = k => e => setF({ ...f, [k]: e.target.value });
+
+  function submit(e) {
+    e.preventDefault();
+    const er = {};
+    if (!f.name.trim()) er.name = "Enter your name.";
+    if (!/^[+()\d\s.-]{7,}$/.test(f.phone.trim())) er.phone = "Enter a phone number we can text.";
+    if (!f.day) er.day = "Choose a day.";
+    else if (f.day < today) er.day = "Choose today or a future day.";
+    setErrors(er);
+    if (Object.keys(er).length) return;
+    const subject = "Booking request: " + f.service + " on " + f.day;
+    const body = ["Name: " + f.name.trim(), "Phone: " + f.phone.trim(), "Service: " + f.service,
+      "Preferred day: " + f.day, f.note.trim() ? "Notes: " + f.note.trim() : ""].filter(Boolean).join("\n");
+    const url = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    setMailto(url);
+    window.location.href = url;
+  }
+
+  const field = (key, label, props) => h("label", { htmlFor: "f-" + key }, label,
+    h("input", Object.assign({ id: "f-" + key, value: f[key], onChange: set(key), "aria-invalid": !!errors[key] }, props)),
+    errors[key] && h("p", { className: "err", role: "alert" }, errors[key]));
+
+  return h("section", { id: "book" },
+    h("div", { className: "wrap cols" },
+      h("div", null,
+        h("h2", null, "Book a chair"),
+        h("p", { className: "muted", style: { maxWidth: "36ch" } },
+          "Choose a service and a day. We’ll text you to confirm a time."),
+        h("p", null, CONFIG.address, h("br"), CONFIG.hours),
+        h("p", null,
+          h("a", { href: "tel:" + CONFIG.phone }, CONFIG.phoneLabel), h("br"),
+          h("a", { href: "mailto:" + CONFIG.email }, CONFIG.email))),
+      mailto
+        ? h("div", { className: "ok", role: "status" },
+            h("b", null, "Almost done, " + f.name.trim() + "."),
+            h("p", null, "Your email app should have opened with your request filled in. Press send to finish booking."),
+            h("p", null, "Nothing opened? ", h("a", { href: mailto }, "Open the email again"), " or call ",
+              h("a", { href: "tel:" + CONFIG.phone }, CONFIG.phoneLabel), "."),
+            h("p", null, h("button", { className: "tab", onClick: () => setMailto(null) }, "Start a new request")))
+        : h("form", { className: "form", onSubmit: submit, noValidate: true },
+            field("name", "Your name", { autoComplete: "name" }),
+            field("phone", "Mobile number", { type: "tel", autoComplete: "tel" }),
+            h("label", { htmlFor: "f-service" }, "Service",
+              h("select", { id: "f-service", value: f.service, onChange: set("service") },
+                allServices.map(s => h("option", { key: s }, s)))),
+            field("day", "Preferred day", { type: "date", min: today }),
+            h("label", { htmlFor: "f-note" }, "Notes (optional)",
+              h("textarea", { id: "f-note", rows: 3, value: f.note, onChange: set("note") })),
+            h("button", { className: "btn", type: "submit", style: { justifySelf: "start" } }, "Send booking request"))));
+}
+
+function Footer() {
+  return h("footer", null, h("div", { className: "wrap" },
+    h("span", null, "© " + CONFIG.year + " " + CONFIG.name + " Hair Studio"),
+    h("a", { href: "#top" }, "Back to top")));
+}
+
+function App() {
+  return h(React.Fragment, null, h(Header), h("main", { id: "main" }, h(Hero), h(Services), h(Team), h(Booking)), h(Footer));
+}
+
+document.title = CONFIG.name + " Hair Studio";
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>
